@@ -1,0 +1,10 @@
+[
+  {
+    "name": "Jaskier",
+    "img-miniature": "./assets/allSongJaskier.png"
+  },
+  {
+    "name": "Underscore",
+    "img-miniature": "./assets/underScore.png"
+  }
+]

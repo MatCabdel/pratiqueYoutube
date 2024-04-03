@@ -1,0 +1,49 @@
+.navbar-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.left-nav {
+  display: flex;
+  flex-direction: row;
+}
+
+.right-nav img{
+  height: 40px;
+}
+.menu-burger img {
+  width: 40px;
+}
+.logo-img img {
+  height: 40px;
+}
+
+input {
+  border-radius: 50px;
+  height: 40px;
+  width: 500px;
+  border: 1px solid #888888;
+}
+
+::placeholder {
+  color: #888888;
+  padding-left: 10px;
+  font-size: 1.2em;
+}
+
+ul {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+li {
+  font-weight: bold;
+  background-color: #f2f2f2;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 0.8em;
+
+}
