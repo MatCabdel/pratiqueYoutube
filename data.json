@@ -1,10 +1,57 @@
 [
   {
-    "name": "Jaskier",
-    "img-miniature": "./assets/allSongJaskier.png"
+    "name": "Jaskier Song Medley",
+    "img": "./assets/allSongJaskier.png",
+    "channelUserName": "MyMedley",
+    "iconUser": "./assets/UserIcon.png",
+    "viewByVideo": "108 k",
+    "parutionDate": "3 ans",
+    "categorieVideo": "Musique"
   },
   {
-    "name": "Underscore",
-    "img-miniature": "./assets/underScore.png"
+    "name": "Nouvel AI, elle est ouf!!",
+    "img": "./assets/underScore.png",
+    "channelUserName": "underscore_",
+    "iconUser": "./assets/underscoreIcon.png",
+    "viewByVideo": "1,2 M",
+    "parutionDate": "18 heures",
+    "categorieVideo": "Entrepreneur"
+    
+  },
+  {
+    "name": "Mes premiers revenus avec mon sass",
+    "img": "./assets/benjaminCode.png",
+    "channelUserName": "BenjaminCode",
+    "iconUser": "./assets/benjaminIcon.png",
+    "viewByVideo": "302 k",
+    "parutionDate": "6 jours",
+    "categorieVideo": "Entrepreneur"
+  },
+  {
+    "name": "Live Charlotte Cardin",
+    "img": "./assets/fanZine.png",
+    "channelUserName": "Waxx",
+    "iconUser": "./assets/waxIcon.png",
+    "viewByVideo": "230 k",
+    "parutionDate": "1 mois",
+    "categorieVideo": "Musique"
+  },
+  {
+    "name": "Episode: Ana Girardot ",
+    "img": "./assets/hotOnes.png",
+    "channelUserName": "Studio Bagel",
+    "iconUser": "./assets/studioBagelIcon.png",
+    "viewByVideo": "1,8 M",
+    "parutionDate": "8 heures",
+    "categorieVideo": "Divertissement"
+  },
+  {
+    "name": "J'ai exploré un chateau hanté!",
+    "img": "./assets/YannExploration.png",
+    "channelUserName": "Yann Exploration",
+    "iconUser": "./assets/ExploreurIcon.png",
+    "viewByVideo": "84 k",
+    "parutionDate": "2 semaines",
+    "categorieVideo": "Découverte"
   }
 ]
