@@ -4,7 +4,24 @@ fetch("./data.json")
     videos.forEach((video) => {
       createVideo(video);
     });
-  });
+  }); 
+  
+ /*********************Toggle Logo********************** */
+
+ function toggleImage() {
+  const image = document.getElementById('imageToggle');
+  const newLogo = image.src.match("assets/logoYoutube.png") ? "assets/Pornhub-Logo-histoire.jpeg" : "assets/logoYoutube.png";
+  image.src = newLogo;
+  clearCategories();
+  renderCategories(newLogo === "assets/Pornhub-Logo-histoire.jpeg" ? categoriesHotData : categoriesData);
+}
+
+function clearCategories() {
+  const categoriesContainer = document.getElementById("categories");
+  categoriesContainer.innerHTML = "";
+}
+
+
 
   /*********************Affichages des vidéos********************** */
 
@@ -60,26 +77,72 @@ function createVideo(video) {
   subtitles.appendChild(viewTitle);
 }
 
+
+
 /*********************Category Button********************** */
+
+const categoriesData = ["Tous", "Musique", "Sports", "News", "Découvertes", "Entrepreneur", "Divertissement"];
+const categoriesHotData = ["Tous", "Milf", "Big tits", "Mature", "Amateur", "french videos", "public"];
 
 const categories = document.querySelector(".filter-container");
 
-function createCategory(video) {
-  const divFilter = document.createElement("div");
-  divFilter.innerHTML = `<div>
-  <ul>
-  <li>Tous</li>
-  <li>Musique</li>
-  <li>milf</li>
-  <li>Entrepreneur/li>
-  <li>Big Boobs</li>
-  <li>Divertissement</li>
-  <li>Découverte</li>
-  <li>Jeux vidéo</li>
-  <li>Actualités</li>
-  <li>Podcast</li>
-</ul></div>`;
-  divCard.classList.add("filters");
-  categories.appendChild(divFilter);
+const categoriesContainer = document.querySelector(".filter-container");
 
+function renderCategories(categories) {
+  categoriesContainer.innerHTML = "";
+  categories.forEach(category => {
+    createCategory(category);
+  });
 }
+
+async function fetchDataAndRender() {
+  try {
+    const response = await fetch('data.json');
+    const videos = await response.json();
+    renderVideos(videos);
+    renderCategories(categoriesData);
+  } catch (error) {
+    console.error('Error fetching and rendering data:', error);
+  }
+}
+
+function renderVideos(videos) {
+  cards.innerHTML = "";
+  videos.forEach(video => {
+    createVideo(video);
+  });
+}
+
+function createCategory(category) {
+  const divFilter = document.createElement("div");
+  divFilter.classList.add("filters");
+  const btnFilter = document.createElement("button");
+  btnFilter.classList.add("btn-filters");
+  btnFilter.textContent = category;
+  btnFilter.addEventListener("click", () => filterVideos(category));
+  divFilter.appendChild(btnFilter);
+  categoriesContainer.appendChild(divFilter);
+}
+
+function filterVideos(category) {
+  if (category === "Tous") {
+    fetchDataAndRender();
+  } else {
+    fetchData().then(data => {
+      const filteredVideos = data.filter(video => video.categorieVideo === category);
+      renderVideos(filteredVideos);
+    });
+  }
+}
+
+async function fetchData() {
+  try {
+    const response = await fetch('data.json');
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+}
+
+fetchDataAndRender();
