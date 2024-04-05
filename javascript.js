@@ -1,29 +1,47 @@
-fetch("./data.json")
-  .then((response) => response.json())
-  .then((videos) => {
-    videos.forEach((video) => {
-      createVideo(video);
-    });
-  }); 
-  
- /*********************Toggle Logo********************** */
+async function fetchData(jsonFile) {
+  try {
+    const response = await fetch(jsonFile);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+}
 
- function toggleImage() {
-  const image = document.getElementById('imageToggle');
-  const newLogo = image.src.match("assets/logoYoutube.png") ? "assets/Pornhub-Logo-histoire.jpeg" : "assets/logoYoutube.png";
+async function fetchDataAndRender(jsonFile) {
+  try {
+    const response = await fetch(jsonFile);
+    const videos = await response.json();
+    renderVideos(videos);
+    renderCategories(jsonFile.includes("dataX") ? categoriesHotData : categoriesData);
+  } catch (error) {
+    console.error("Error fetching and rendering data:", error);
+  }
+}
+
+fetchDataAndRender("data.json");
+
+
+/*********************Toggle Logo********************** */
+
+function toggleImage() {
+  const image = document.getElementById("imageToggle");
+  const currentLogo = image.src;
+  const newLogo = currentLogo.includes("logoYoutube.png")
+    ? "assets/Pornhub-Logo-histoire.jpeg"
+    : "assets/logoYoutube.png";
   image.src = newLogo;
-  clearCategories();
-  renderCategories(newLogo === "assets/Pornhub-Logo-histoire.jpeg" ? categoriesHotData : categoriesData);
+  const newCategories = newLogo.includes("Pornhub")
+    ? categoriesHotData
+    : categoriesData;
+  console.log("New categories:", newCategories);
+  renderCategories(newCategories);
+
+  const jsonDataFile = newLogo.includes("Pornhub") ? "dataX.json" : "data.json";
+  fetchDataAndRender(jsonDataFile);
 }
 
-function clearCategories() {
-  const categoriesContainer = document.getElementById("categories");
-  categoriesContainer.innerHTML = "";
-}
-
-
-
-  /*********************Affichages des vidéos********************** */
+/*********************Affichages des vidéos********************** */
 
 const cards = document.querySelector(".video-cards");
 
@@ -77,38 +95,33 @@ function createVideo(video) {
   subtitles.appendChild(viewTitle);
 }
 
-
-
 /*********************Category Button********************** */
 
-const categoriesData = ["Tous", "Musique", "Sports", "News", "Découvertes", "Entrepreneur", "Divertissement"];
-const categoriesHotData = ["Tous", "Milf", "Big tits", "Mature", "Amateur", "french videos", "public"];
-
-const categories = document.querySelector(".filter-container");
+const categoriesData = [
+  "Tous",
+  "Musique",
+  "Sports",
+  "News",
+  "Découvertes",
+  "Entrepreneur",
+  "Divertissement",
+];
+const categoriesHotData = [
+  "Tous",
+  "Milf",
+  "Big tits",
+  "Mature",
+  "Amateur",
+  "french videos",
+  "public",
+];
 
 const categoriesContainer = document.querySelector(".filter-container");
 
-function renderCategories(categories) {
-  categoriesContainer.innerHTML = "";
-  categories.forEach(category => {
-    createCategory(category);
-  });
-}
-
-async function fetchDataAndRender() {
-  try {
-    const response = await fetch('data.json');
-    const videos = await response.json();
-    renderVideos(videos);
-    renderCategories(categoriesData);
-  } catch (error) {
-    console.error('Error fetching and rendering data:', error);
-  }
-}
 
 function renderVideos(videos) {
   cards.innerHTML = "";
-  videos.forEach(video => {
+  videos.forEach((video) => {
     createVideo(video);
   });
 }
@@ -123,26 +136,29 @@ function createCategory(category) {
   divFilter.appendChild(btnFilter);
   categoriesContainer.appendChild(divFilter);
 }
-
 function filterVideos(category) {
+  const currentLogo = document.getElementById("imageToggle").src;
   if (category === "Tous") {
-    fetchDataAndRender();
+    const jsonFile = currentLogo.includes("Pornhub") ? "dataX.json" : "data.json";
+    fetchDataAndRender(jsonFile);
   } else {
-    fetchData().then(data => {
-      const filteredVideos = data.filter(video => video.categorieVideo === category);
-      renderVideos(filteredVideos);
+    const jsonFile = currentLogo.includes("Pornhub") ? "dataX.json" : "data.json";
+    fetchDataAndRender(jsonFile).then(() => {
+      fetchData(jsonFile).then((data) => {
+        const filteredVideos = data.filter((video) => video.categorieVideo === category);
+        renderVideos(filteredVideos);
+      });
     });
   }
 }
 
-async function fetchData() {
-  try {
-    const response = await fetch('data.json');
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error('Error fetching data:', error);
-  }
+async function renderCategories(categories) {
+  categoriesContainer.innerHTML = "";
+  categories.forEach((category) => {
+    createCategory(category);
+  });
 }
 
-fetchDataAndRender();
+
+
+

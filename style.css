@@ -1,42 +1,64 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
 
 * {
   max-width: 100%;
+  box-sizing: border-box;
 }
 
 body {
   max-width: 100%;
+  margin: 5px 0;
 }
 
 .navbar-container {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin-top: 5px 10px;
+  margin-top: 15px 10px;
 }
 
 .left-nav {
   display: flex;
   flex-direction: row;
-  padding-left: 10px
+  padding-left: 10px;
 }
 
-.right-nav img{
+.right-nav img {
   height: 40px;
+  padding-right: 20px;
 }
 .menu-burger img {
   width: 40px;
+  padding: 5px;
+  align-self: center;
+  padding-top: 8px;
 }
 .logo-img img {
   width: 130px;
   height: 40px;
+  padding-left: 10px;
+}
+
+.searchbar {
+  display: flex;
+  flex-direction: row;
+}
+
+.searchbar img {
+  height: 40px;
+  align-self: center;
+  padding: 10px 25px 10px 25px;
+  background-color: #f8f8f8;
+  border-radius: 0 50px 50px 0;
+  margin-top: 5px;
+  border: 1px solid #cccccc;
 }
 
 input {
-  border-radius: 50px;
+  border-radius: 50px 0 0 50px;
   height: 40px;
   width: 500px;
-  border: 1px solid #888888;
+  border: 1px solid #cccccc;
   margin-top: 5px;
 }
 
@@ -62,18 +84,21 @@ button {
   font-size: 0.9em;
   font-family: "Roboto", sans-serif;
   border: none;
-
 }
 
-.video-cards{
+.video-cards {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-  margin: 20px 10px;
+  margin: 0 auto;
   padding: 10px;
   gap: 20px;
   font-family: "roboto", sans-serif;
   font-size: 0.8em;
+}
+
+.card-container {
+  width: calc(25% - 15px);
 }
 
 h4 {
@@ -84,8 +109,13 @@ h4 {
   display: flex;
   flex-direction: row;
 }
+
+.img-container {
+  width: 280px;
+}
+
 .img-container img {
-  width: 290px;
+  width: 100%;
 }
 
 .icon-container {
