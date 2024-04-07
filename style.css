@@ -62,6 +62,14 @@ input {
   margin-top: 5px;
 }
 
+.searchbar input[type="search"] {
+  padding-left: 15px; 
+}
+
+.searchbar img {
+  cursor: pointer;
+}
+
 ::placeholder {
   color: #888888;
   padding-left: 10px;

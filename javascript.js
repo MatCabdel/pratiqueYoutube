@@ -22,7 +22,7 @@ async function fetchDataAndRender(jsonFile) {
 fetchDataAndRender("data.json");
 
 
-/*********************Toggle Logo********************** */
+/********************* Toggle ********************** */
 
 function toggleImage() {
   const image = document.getElementById("imageToggle");
@@ -95,7 +95,7 @@ function createVideo(video) {
   subtitles.appendChild(viewTitle);
 }
 
-/*********************Category Button********************** */
+/********************* Category Button ********************** */
 
 const categoriesData = [
   "Tous",
@@ -159,6 +159,28 @@ async function renderCategories(categories) {
   });
 }
 
+/********************* searchBar ********************** */
 
+const searchInput = document.querySelector('.searchbar input[type="search"]');
 
+searchInput.addEventListener('input', () => {
+  const searchTerm = searchInput.value.trim().toLowerCase(); 
+  filterVideosBySearchTerm(searchTerm); 
+});
 
+function filterVideosBySearchTerm(searchTerm) {
+  const currentLogo = document.getElementById('imageToggle').src;
+  const jsonFile = currentLogo.includes('Pornhub') ? 'dataX.json' : 'data.json';
+  
+  fetchData(jsonFile).then((data) => {
+    const filteredVideos = data.filter((video) => {
+      return video.name.toLowerCase().includes(searchTerm) || video.channelUserName.toLowerCase().includes(searchTerm);
+    });
+    renderVideos(filteredVideos); 
+  });
+}
+
+function handleSearchChange() {
+  const searchTerm = document.querySelector('.searchbar input[type="search"]').value.trim().toLowerCase();
+  filterVideosBySearchTerm(searchTerm);
+}
