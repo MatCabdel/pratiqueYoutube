@@ -27,9 +27,9 @@ async function renderCategories(categories) {
 async function renderChannel(jsonFile) {
   const response = await fetch(jsonFile);
   const videos = await response.json();
-  const channelsData = videos.map(video => ({
+  const channelsData = videos.map((video) => ({
     channelUserName: video.channelUserName,
-    iconUser: video.iconUser
+    iconUser: video.iconUser,
   }));
 
   channels.innerHTML = "";
@@ -37,7 +37,6 @@ async function renderChannel(jsonFile) {
   channelsData.forEach((channel) => {
     createChannel(channel);
   });
-
 }
 renderChannel("data.json");
 
@@ -56,7 +55,6 @@ async function fetchDataAndRender(jsonFile) {
 
 fetchDataAndRender("data.json");
 
-
 /********************* Toggle ********************** */
 
 function toggleImage() {
@@ -69,7 +67,7 @@ function toggleImage() {
   const newCategories = newLogo.includes("Pornhub")
     ? categoriesHotData
     : categoriesData;
-  console.log("New categories:", newCategories);
+
   renderCategories(newCategories);
 
   const jsonDataFile = newLogo.includes("Pornhub") ? "dataX.json" : "data.json";
@@ -191,9 +189,9 @@ function filterVideos(category) {
 const searchInput = document.querySelector('.searchbar input[type="search"]');
 
 searchInput.addEventListener("input", () => {
-  const searchTerm = searchInput.value.trim().toLowerCase();
   filterVideosBySearchTerm(searchTerm);
 });
+const searchTerm = searchInput.value.trim().toLowerCase();
 
 function filterVideosBySearchTerm(searchTerm) {
   const currentLogo = document.getElementById("imageToggle").src;
@@ -220,16 +218,9 @@ function handleSearchChange() {
 
 /********************* Affichages des chaines ********************** */
 
-
 const channels = document.querySelector(".channel-nav");
 
-const channelsTitle = document.createElement("h5");
-channelsTitle.innerHTML = "Abonnements";
-channels.appendChild(channelsTitle);
-console.log(channelsTitle)
-
 function createChannel(video) {
-
   const listChannel = document.createElement("div");
   listChannel.classList.add("list-channel");
   channels.appendChild(listChannel);
@@ -251,4 +242,3 @@ function createChannel(video) {
   channelName.classList.add("name-channel");
   li.appendChild(channelName);
 }
-
