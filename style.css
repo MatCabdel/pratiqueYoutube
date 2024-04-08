@@ -37,6 +37,7 @@ body {
   width: 130px;
   height: 40px;
   padding-left: 10px;
+  cursor: pointer;
 }
 
 .searchbar {
@@ -52,6 +53,11 @@ body {
   border-radius: 0 50px 50px 0;
   margin-top: 5px;
   border: 1px solid #cccccc;
+  cursor: pointer;
+}
+
+.searchbar .logo-search:hover {
+  background-color: #f0f0f0;
 }
 
 input {
@@ -63,11 +69,7 @@ input {
 }
 
 .searchbar input[type="search"] {
-  padding-left: 15px; 
-}
-
-.searchbar img {
-  cursor: pointer;
+  padding-left: 15px;
 }
 
 ::placeholder {
@@ -76,6 +78,72 @@ input {
   font-size: 1.2em;
 }
 
+.main-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.left-home {
+  background-color: white;
+  width: 17%;
+}
+
+.home-nav li {
+  display: flex;
+  flex-direction: row;
+}
+
+.user-nav li {
+  display: flex;
+  flex-direction: row;
+}
+
+.channel-nav h5 {
+  color: black;
+}
+.main-container ul {
+  list-style: none;
+}
+
+.left-home button {
+  background-color: white;
+  color: #606060;
+}
+
+.left-home h5 {
+  margin-left: 30px;
+  color: black;
+  font-weight: bold;
+  font-family: "roboto";
+}
+
+.main-container button:hover {
+  background-color: #e5e5e5;
+  color: black;
+}
+
+.channel-list {
+  display: flex;
+  flex-direction: row;
+  padding-left: 30px;
+}
+
+.channel-list img {
+  width: 25px;
+  height: 25px;
+  align-self: center;
+}
+
+.channel-list li {
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+}
+
+.right-home {
+  width: 83%;
+}
 .filter-container {
   list-style: none;
   display: flex;
@@ -92,6 +160,11 @@ button {
   font-size: 0.9em;
   font-family: "Roboto", sans-serif;
   border: none;
+  cursor: pointer;
+}
+
+.btn-filters:hover {
+  background-color: #e5e5e5;
 }
 
 .video-cards {
@@ -119,7 +192,7 @@ h4 {
 }
 
 .img-container {
-  width: 280px;
+  width: 320px;
 }
 
 .img-container img {

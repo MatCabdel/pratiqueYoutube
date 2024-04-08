@@ -1,3 +1,5 @@
+/********************* Fetch and Render ********************** */
+
 async function fetchData(jsonFile) {
   try {
     const response = await fetch(jsonFile);
@@ -8,12 +10,45 @@ async function fetchData(jsonFile) {
   }
 }
 
+function renderVideos(videos) {
+  cards.innerHTML = "";
+  videos.forEach((video) => {
+    createVideo(video);
+  });
+}
+
+async function renderCategories(categories) {
+  categoriesContainer.innerHTML = "";
+  categories.forEach((category) => {
+    createCategory(category);
+  });
+}
+
+async function renderChannel(jsonFile) {
+  const response = await fetch(jsonFile);
+  const videos = await response.json();
+  const channelsData = videos.map(video => ({
+    channelUserName: video.channelUserName,
+    iconUser: video.iconUser
+  }));
+
+  channels.innerHTML = "";
+
+  channelsData.forEach((channel) => {
+    createChannel(channel);
+  });
+
+}
+renderChannel("data.json");
+
 async function fetchDataAndRender(jsonFile) {
   try {
     const response = await fetch(jsonFile);
     const videos = await response.json();
     renderVideos(videos);
-    renderCategories(jsonFile.includes("dataX") ? categoriesHotData : categoriesData);
+    renderCategories(
+      jsonFile.includes("dataX") ? categoriesHotData : categoriesData
+    );
   } catch (error) {
     console.error("Error fetching and rendering data:", error);
   }
@@ -39,6 +74,7 @@ function toggleImage() {
 
   const jsonDataFile = newLogo.includes("Pornhub") ? "dataX.json" : "data.json";
   fetchDataAndRender(jsonDataFile);
+  renderChannel(jsonDataFile);
 }
 
 /*********************Affichages des vidéos********************** */
@@ -118,14 +154,6 @@ const categoriesHotData = [
 
 const categoriesContainer = document.querySelector(".filter-container");
 
-
-function renderVideos(videos) {
-  cards.innerHTML = "";
-  videos.forEach((video) => {
-    createVideo(video);
-  });
-}
-
 function createCategory(category) {
   const divFilter = document.createElement("div");
   divFilter.classList.add("filters");
@@ -139,48 +167,88 @@ function createCategory(category) {
 function filterVideos(category) {
   const currentLogo = document.getElementById("imageToggle").src;
   if (category === "Tous") {
-    const jsonFile = currentLogo.includes("Pornhub") ? "dataX.json" : "data.json";
+    const jsonFile = currentLogo.includes("Pornhub")
+      ? "dataX.json"
+      : "data.json";
     fetchDataAndRender(jsonFile);
   } else {
-    const jsonFile = currentLogo.includes("Pornhub") ? "dataX.json" : "data.json";
+    const jsonFile = currentLogo.includes("Pornhub")
+      ? "dataX.json"
+      : "data.json";
     fetchDataAndRender(jsonFile).then(() => {
       fetchData(jsonFile).then((data) => {
-        const filteredVideos = data.filter((video) => video.categorieVideo === category);
+        const filteredVideos = data.filter(
+          (video) => video.categorieVideo === category
+        );
         renderVideos(filteredVideos);
       });
     });
   }
 }
 
-async function renderCategories(categories) {
-  categoriesContainer.innerHTML = "";
-  categories.forEach((category) => {
-    createCategory(category);
-  });
-}
-
 /********************* searchBar ********************** */
 
 const searchInput = document.querySelector('.searchbar input[type="search"]');
 
-searchInput.addEventListener('input', () => {
-  const searchTerm = searchInput.value.trim().toLowerCase(); 
-  filterVideosBySearchTerm(searchTerm); 
+searchInput.addEventListener("input", () => {
+  const searchTerm = searchInput.value.trim().toLowerCase();
+  filterVideosBySearchTerm(searchTerm);
 });
 
 function filterVideosBySearchTerm(searchTerm) {
-  const currentLogo = document.getElementById('imageToggle').src;
-  const jsonFile = currentLogo.includes('Pornhub') ? 'dataX.json' : 'data.json';
-  
+  const currentLogo = document.getElementById("imageToggle").src;
+  const jsonFile = currentLogo.includes("Pornhub") ? "dataX.json" : "data.json";
+
   fetchData(jsonFile).then((data) => {
     const filteredVideos = data.filter((video) => {
-      return video.name.toLowerCase().includes(searchTerm) || video.channelUserName.toLowerCase().includes(searchTerm);
+      return (
+        video.name.toLowerCase().includes(searchTerm) ||
+        video.channelUserName.toLowerCase().includes(searchTerm)
+      );
     });
-    renderVideos(filteredVideos); 
+    renderVideos(filteredVideos);
   });
 }
 
 function handleSearchChange() {
-  const searchTerm = document.querySelector('.searchbar input[type="search"]').value.trim().toLowerCase();
+  const searchTerm = document
+    .querySelector('.searchbar input[type="search"]')
+    .value.trim()
+    .toLowerCase();
   filterVideosBySearchTerm(searchTerm);
 }
+
+/********************* Affichages des chaines ********************** */
+
+
+const channels = document.querySelector(".channel-nav");
+
+const channelsTitle = document.createElement("h5");
+channelsTitle.innerHTML = "Abonnements";
+channels.appendChild(channelsTitle);
+console.log(channelsTitle)
+
+function createChannel(video) {
+
+  const listChannel = document.createElement("div");
+  listChannel.classList.add("list-channel");
+  channels.appendChild(listChannel);
+
+  const ul = document.createElement("ul");
+  ul.classList.add("channel-list");
+  listChannel.appendChild(ul);
+
+  const li = document.createElement("li");
+  ul.appendChild(li);
+
+  const channelImg = document.createElement("img");
+  channelImg.src = video.iconUser;
+  channelImg.classList.add("img-channel");
+  li.appendChild(channelImg);
+
+  const channelName = document.createElement("button");
+  channelName.innerHTML = video.channelUserName;
+  channelName.classList.add("name-channel");
+  li.appendChild(channelName);
+}
+
