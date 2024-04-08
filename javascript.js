@@ -10,19 +10,15 @@ async function fetchData(jsonFile) {
   }
 }
 
-function renderVideos(videos) {
-  cards.innerHTML = "";
-  videos.forEach((video) => {
-    createVideo(video);
-  });
+ async function createRender(div, method, elements) {
+  div.innerHTML = "";
+  elements.forEach((el) => {
+    method(el);
+  })
 }
 
-async function renderCategories(categories) {
-  categoriesContainer.innerHTML = "";
-  categories.forEach((category) => {
-    createCategory(category);
-  });
-}
+async function renderVideos(videos) { await createRender(cards, createVideo, videos)}
+async function renderCategories(categories) { await createRender(categoriesContainer, createCategory, categories)}
 
 async function renderChannel(jsonFile) {
   const response = await fetch(jsonFile);
@@ -79,54 +75,30 @@ function toggleImage() {
 
 const cards = document.querySelector(".video-cards");
 
+function createHTMLElement(node, className, parent) {
+  const element = document.createElement(node);
+  element.classList.add(className);
+  parent.appendChild(element);
+  return element;
+}
+
 function createVideo(video) {
-  const divCard = document.createElement("div");
-  divCard.classList.add("card-container");
-  cards.appendChild(divCard);
 
-  const cardImg = document.createElement("img");
+  const divCard = createHTMLElement("div", "card-container", cards)
+  const cardImg = createHTMLElement("img", "img-container", divCard )
   cardImg.src = video.img;
-  divCard.classList.add("img-container");
-  divCard.appendChild(cardImg);
-
-  const divTitle = document.createElement("div");
-  divTitle.classList.add("title-container");
-  divCard.appendChild(divTitle);
-
-  const divIcon = document.createElement("div");
-  divIcon.classList.add("icon-container");
-  divTitle.appendChild(divIcon);
-
-  const cardIcon = document.createElement("img");
+  const divTitle = createHTMLElement("div", "title-container", divCard )
+  const divIcon = createHTMLElement("div", "icon-container", divTitle )
+  const cardIcon = createHTMLElement("img", "card-icon-container", divIcon )
   cardIcon.src = video.iconUser;
-  divIcon.appendChild(cardIcon);
-
-  const titles = document.createElement("div");
-  titles.classList.add("titles");
-  divTitle.appendChild(titles);
-
-  const mainTitle = document.createElement("div");
-  mainTitle.classList.add("mainTitles");
-  titles.appendChild(mainTitle);
-
-  const cardTitle = document.createElement("h3");
-  cardTitle.innerHTML = video.name;
-  divCard.classList.add("title-video");
-  titles.appendChild(cardTitle);
-
-  const subtitles = document.createElement("div");
-  subtitles.classList.add("subtitles");
-  titles.appendChild(subtitles);
-
-  const cardChannel = document.createElement("h4");
+  const titles = createHTMLElement("div", "titles", divTitle )
+  const mainTitle = createHTMLElement("div", "mainTitles", titles);
+  createHTMLElement("h3", "title-video", mainTitle, video.name);
+  const subtitles = createHTMLElement("div", "subtitles", titles);
+  const cardChannel = createHTMLElement("h4", "channel-container", subtitles);
   cardChannel.innerHTML = video.channelUserName;
-  divCard.classList.add("channel-container");
-  subtitles.appendChild(cardChannel);
-
-  const viewTitle = document.createElement("h4");
-  viewTitle.innerHTML = `${video.viewByVideo} vues - il y a ${video.parutionDate}`;
-  divCard.classList.add("view-container");
-  subtitles.appendChild(viewTitle);
+  const viewTitle = createHTMLElement("h4", "view-container", subtitles);
+  viewTitle.innerHTML = `${video.viewByVideo} vues - il y a ${video.parutionDate}`
 }
 
 /********************* Category Button ********************** */
